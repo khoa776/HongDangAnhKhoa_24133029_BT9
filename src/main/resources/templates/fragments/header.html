@@ -1,38 +1,36 @@
 <!doctype html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
   <body>
     <header th:fragment="header">
       <nav>
         <a th:href="@{/}">UTEShop</a>
-        <div th:if="${#authorization.expression('isAuthenticated()')}">
-          <!-- Avatar -->
+
+        <div sec:authorize="isAuthenticated()">
           <img
-            th:src="${#authentication.principal.images != null and !#strings.isEmpty(#authentication.principal.images) ? #authentication.principal.images : '/images/avatar-default.png'}"
+            th:src="${#authentication.principal.images != null ? #authentication.principal.images : '/images/avatar-default.png'}"
             alt="Avatar"
-            width="40"
-            height="40"
-            style="border-radius: 50%; object-fit: cover"
           />
-          <!-- Full name -->
-          <span th:text="${#authentication.principal.fullName}"
-            >Nguyễn Văn A</span
-          >
-          <!-- Username -->
+
+          <span th:text="${#authentication.principal.fullName}">Full Name</span>
           <span th:text="'(' + ${#authentication.principal.username} + ')'"
-            >(nguyenvana)</span
+            >(username)</span
           >
-          <!-- Email -->
           <span th:text="${#authentication.principal.email}"
-            >email@gmail.com</span
+            >email@example.com</span
           >
-          <!-- Role -->
-          <span th:text="${#authentication.principal.role}">ROLE_USER</span>
-          <!-- Logout -->
+          <span th:text="${#authentication.principal.authorities[0].authority}"
+            >ROLE</span
+          >
+
           <form th:action="@{/logout}" method="post" style="display: inline">
             <button type="submit">Đăng xuất</button>
           </form>
         </div>
-        <div th:unless="${#authorization.expression('isAuthenticated()')}">
+
+        <div sec:authorize="!isAuthenticated()">
           <a th:href="@{/login}">Đăng nhập</a>
         </div>
       </nav>

@@ -1,18 +1,19 @@
 <!doctype html>
 <html
-  lang="vi"
   xmlns:th="http://www.thymeleaf.org"
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 >
   <head>
     <meta charset="UTF-8" />
-    <title layout:title-pattern="$CONTENT_TITLE - UTEShop">UTEShop</title>
+    <title>UTEShop</title>
+    <!-- Nhúng file CSS -->
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
   </head>
   <body>
-    <header th:replace="~{fragments/header :: header}"></header>
+    <div th:replace="~{fragments/header :: header}"></div>
+
     <main layout:fragment="content"></main>
-    <footer>
-      <p>Copyright © UTEShop</p>
-    </footer>
+
+    <div th:replace="~{fragments/footer :: footer}"></div>
   </body>
 </html>
