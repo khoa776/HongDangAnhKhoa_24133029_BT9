@@ -1,130 +1,43 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Đăng nhập - UTEShop</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" th:href="@{/css/style.css}" />
-    <style>
-      .login-container {
-        max-width: 400px;
-        margin: 60px auto;
-        padding: 32px;
-        background: #ffffff;
-        border-radius: 10px;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-      }
-
-      .login-container h2 {
-        margin-top: 0;
-        margin-bottom: 24px;
-        text-align: center;
-        color: #172554;
-      }
-
-      .form-group {
-        margin-bottom: 18px;
-      }
-
-      .form-group label {
-        display: block;
-        margin-bottom: 6px;
-        font-weight: 600;
-        color: #374151;
-      }
-
-      .form-group input {
-        width: 100%;
-        padding: 10px 12px;
-        border: 1px solid #d1d5db;
-        border-radius: 6px;
-        box-sizing: border-box;
-        font-size: 14px;
-        outline: none;
-        transition: border-color 0.2s;
-      }
-
-      .form-group input:focus {
-        border-color: #2563eb;
-      }
-
-      .alert {
-        padding: 10px 14px;
-        border-radius: 6px;
-        margin-bottom: 18px;
-        font-size: 14px;
-      }
-
-      .alert-danger {
-        background-color: #fee2e2;
-        color: #991b1b;
-        border: 1px solid #fca5a5;
-      }
-
-      .alert-success {
-        background-color: #dcfce7;
-        color: #166534;
-        border: 1px solid #86efac;
-      }
-
-      .btn-login {
-        width: 100%;
-        padding: 10px;
-        background-color: #172554;
-        color: #ffffff;
-        border: none;
-        border-radius: 6px;
-        font-size: 16px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: background 0.2s;
-      }
-
-      .btn-login:hover {
-        background-color: #1e40af;
-      }
-    </style>
-  </head>
+  <head th:replace="~{layouts/layout :: head('Đăng nhập')}"></head>
   <body>
-    <div class="login-container">
-      <h2>Đăng nhập</h2>
+    <div class="auth-page">
+      <div class="auth-card">
+        <h1>Đăng nhập</h1>
+        <div th:if="${param.error}" class="alert error">
+          Username/password không đúng hoặc tài khoản chưa được xác thực.
+        </div>
+        <div th:if="${param.logout}" class="alert success">
+          Bạn đã đăng xuất.
+        </div>
+        <div
+          th:if="${success}"
+          class="alert success"
+          th:text="${success}"
+        ></div>
 
-      <!-- Báo lỗi đăng nhập -->
-      <div th:if="${param.error}" class="alert alert-danger">
-        Username/Email hoặc Mật khẩu không chính xác!
-      </div>
-
-      <!-- Báo đăng xuất thành công -->
-      <div th:if="${param.logout}" class="alert alert-success">
-        Bạn đã đăng xuất thành công.
-      </div>
-
-      <form th:action="@{/login}" method="post">
-        <div class="form-group">
-          <label for="username">Username hoặc Email</label>
+        <form th:action="@{/login}" method="post">
+          <label>Username / Email</label>
           <input
-            type="text"
-            id="username"
             name="username"
-            placeholder="Nhập username hoặc email..."
             required
             autofocus
+            placeholder="Username hoặc email..."
           />
-        </div>
-
-        <div class="form-group">
-          <label for="password">Mật khẩu</label>
+          <label>Password</label>
           <input
             type="password"
-            id="password"
             name="password"
-            placeholder="Nhập mật khẩu..."
             required
+            placeholder="Mật khẩu..."
           />
-        </div>
+          <button class="button full" type="submit">Đăng nhập</button>
+        </form>
 
-        <button type="submit" class="btn-login">Đăng nhập</button>
-      </form>
+        <p><a th:href="@{/register}">Tạo tài khoản mới</a></p>
+        <p><a th:href="@{/forgot-password}">Quên mật khẩu?</a></p>
+      </div>
     </div>
   </body>
 </html>
